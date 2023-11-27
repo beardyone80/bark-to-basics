@@ -29,3 +29,7 @@ footer {
     margin: 1rem;
     color: black;
 }
+
+.active {
+    border-bottom: 2px solid blue;
+}
