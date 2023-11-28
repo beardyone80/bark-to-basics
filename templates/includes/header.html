@@ -15,13 +15,19 @@
             <li class="nav-item">
                 <a class="nav-link {% if request.path == logout_url %}active" aria-current="page{% endif %}"
                     href="{% url 'account_logout' %}">Logout</a>
-            </li> {% else %} <li class="nav-item">
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link {% if request.path == modules_url %}active" aria-current="page{% endif %}"
+                    href="{% url 'modules' %}">Modules</a>
+            {% else %} <li class="nav-item">
                 <a class="nav-link {% if request.path == signup_url %}active" aria-current="page{% endif %}"
                     href="{% url 'account_signup' %}">Register</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.path == login_url %}active" aria-current="page{% endif %}"
                     href="{% url 'account_login' %}">Login</a>
+            </li>
+
             </li>
              {% endif %}
         </ul> <span class="navbar-text text-muted"> adventures in dog ownership </span>
