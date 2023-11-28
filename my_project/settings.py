@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEVELOPMENT' in os.environ
 
-ALLOWED_HOSTS = ['8000-beardyone80-barktobasic-hdpr91krzgf.ws-eu106.gitpod.io','.herokuapp.com']
+ALLOWED_HOSTS = ['8000-beardyone80-barktobasic-3wadwxtu7li.ws-eu106.gitpod.io','.herokuapp.com']
 
 
 # Application definition
@@ -50,10 +50,13 @@ INSTALLED_APPS = [
 
     # Apps
     'home',
+    'lessons',
 
     # OTHER
     'crispy_forms',
     'crispy_bootstrap5',
+    'cloudinary',
+    #'cloudinary_storage',
 ]
 
 SITE_ID = 1
@@ -116,7 +119,8 @@ DATABASES = {
 
 CSRF_TRUSTED_ORIGINS = [
     'http://*.gitpod.io',
-    'http://*.herokuapp.com'
+    'http://*.herokuapp.com',
+    'https://8000-beardyone80-barktobasic-3wadwxtu7li.ws-eu106.gitpod.io',
 ]
 
 
