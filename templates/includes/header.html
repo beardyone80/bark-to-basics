@@ -8,6 +8,9 @@
                 <a class="nav-link {% if request.path == home_url %}active" aria-current="page{% endif %}"
                     href="{% url 'home' %}">Home</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {% if url_name == 'add_lesson' %}active{% endif %}" href="{% url 'add_lesson' %}">Add lesson</a>
+            </li>
             {% if user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link {% if request.path == logout_url %}active" aria-current="page{% endif %}"
@@ -19,8 +22,9 @@
             <li class="nav-item">
                 <a class="nav-link {% if request.path == login_url %}active" aria-current="page{% endif %}"
                     href="{% url 'account_login' %}">Login</a>
-            </li> {% endif %}
-        </ul> <span class="navbar-text text-muted"> adventures of a software developer </span>
+            </li>
+             {% endif %}
+        </ul> <span class="navbar-text text-muted"> adventures in dog ownership </span>
     </div>
 </nav>
 {% endwith %}

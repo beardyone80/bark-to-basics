@@ -18,4 +18,6 @@ class LessonAdmin(admin.ModelAdmin):
         'excerpt',
         'updated_on',
     )
-    list_filter=('category',)
+    
+    list_filter = ('category',)
+    prepopulated_fields = {'slug': ('title',)}
