@@ -1,36 +1,22 @@
 {% extends 'base.html' %}
 {% load static%}
+
+{% block title %}Modules{% endblock %}
+
 {% block content %}
-
-
-<div class="col-12 mt-3 left">
-    <h1>modules.html</h1>
-    <div class="row"> {% for lessons in lesson_list %} <div class="col-md-4">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="image-container"> {% if "placeholder" in lessons.image.url %} <img
-                            class="card-img-top" src="{% static 'images/default.jpg' %}" alt="placeholder image">
-                        {% else %} <img class="card-img-top" src=" {{ lessons.image.url }}"
-                            alt="{{ lessons.title }}"> {% endif %} <div class="image-flash">
-                            <p class="author">Author: {{ lessons.author }}</p>
-                        </div>
-                    </div> <a href="{% url 'post_detail' lessons.slug %}" class="lessons-link">
-                        <h2 class="card-title">{{ lessons.title }}</h2>
-                        <p class="card-text">{{ lessons.excerpt }}</p>
-                    </a>
-                    <hr />
-                    <p class="card-text text-muted h6">{{ lessons.created_on}}
-                    </p>
-                </div>
+<h1 class="text-center p-2">Modules</h1>
+<div class="container d-flex flex-row flex-wrap justify-content-center">
+    {% for lessons in lessons %}
+    <a href="" class="modules" aria-label="Click to view {{lessons.title}}">
+        <div class="card m-3 custom-card" style="width:18rem;">
+            <img src="{{lessons.image.url}}" class="card-img-top" alt="{{lessons.image_alt}}">
+            <div class="card-body">
+                <h2 class="card-title">{{lessons.title}}</h2>
+                <p class="card-text">{{lessons.excerpt|truncatechars:100}}</p>
             </div>
         </div>
-        {% if forloop.counter|divisibleby:3 %}
-    </div>
-    <div class="row">
-        {% endif %}
-        {% endfor %}
+    </a>
+    {% endfor %}
 
-    </div>
 </div>
-</div>
-{% endblock content%}
+{% endblock %}

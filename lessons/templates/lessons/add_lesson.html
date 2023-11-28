@@ -4,7 +4,7 @@
 <div class="container"> 
     <form method="post" enctype="multipart/form-data" class="p-2 form"> 
         <h1 class="text-center">Add Lesson</h1> 
-        {% csrf_token %} 
+        {% csrf_token %}
         {{ form.media }} 
         {{ form| crispy }} 
         <div class="text-center"> 
