@@ -120,7 +120,7 @@ DATABASES = {
 CSRF_TRUSTED_ORIGINS = [
     'http://*.gitpod.io',
     'http://*.herokuapp.com',
-    'https://8000-beardyone80-barktobasic-hdpr91krzgf.ws-eu106.gitpod.io',
+    'https://8000-beardyone80-barktobasic-szlr40vvpqb.ws-eu106.gitpod.io',
 ]
 
 
