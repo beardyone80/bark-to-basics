@@ -1,5 +1,5 @@
 from django import forms
-from .models import Lessons
+from .models import Lessons, Comment
 
 
 class LessonForm(forms.ModelForm):
@@ -36,3 +36,8 @@ class LessonForm(forms.ModelForm):
             instance.save()
 
         return instance
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('body',)

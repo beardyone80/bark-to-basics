@@ -1,8 +1,10 @@
-#from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from django.views.generic import CreateView, ListView, DetailView
 from .models import Lessons
-from .forms import LessonForm
+from .forms import LessonForm, CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Create your views here.
 
@@ -29,3 +31,73 @@ class LessonDetail(DetailView):
     template_name='lessons/lesson_detail.html'
     model = Lessons
     context_object_name='lesson'
+
+
+    def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            lesson = self.get_object()
+            comments = lesson.comments.filter(approved=True).order_by("-created_on")
+            comment_count = lesson.comments.filter(approved=True).count()
+            comment_form = CommentForm()
+
+            context["comments"] = comments
+            context["comment_count"] = comment_count
+            context["comment_form"] = comment_form
+            return context
+
+    def post(self, request, *args, **kwargs):
+        lesson = self.get_object()
+        comment_form = CommentForm(data=request.POST)
+
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.commenter = request.user
+            comment.lesson = lesson
+            comment.save()
+            messages.add_message(
+                request, messages.SUCCESS,
+                'Comment submitted and awaiting approval'
+            )
+
+        return redirect('lesson_detail', slug=lesson.slug)
+
+    def edit_comment(request, slug, comment_id):
+        """
+        view to edit comments
+        """
+        if request.method == "POST":
+
+            queryset = Post.objects.filter(status=1)
+            post = get_object_or_404(queryset, slug=slug)
+            comment = get_object_or_404(Comment, pk=comment_id)
+            comment_form = CommentForm(data=request.POST, instance=comment)
+
+            if comment_form.is_valid() and comment.commenter == request.user:
+                comment = comment_form.save(commit=False)
+                comment.post = post
+                comment.approved = False
+                comment.save()
+                messages.add_message(request, messages.SUCCESS, 'Comment Updated!')
+            else:
+                messages.add_message(request, messages.ERROR,
+                                    'Error updating comment!')
+
+        return HttpResponseRedirect(reverse('post_detail', args=[slug]))
+
+
+    def delete_comment(request, slug, comment_id):
+        """
+        view to delete comment
+        """
+        queryset = Post.objects.filter(status=1)
+        post = get_object_or_404(queryset, slug=slug)
+        comment = get_object_or_404(Comment, pk=comment_id)
+
+        if comment.commenter == request.user:
+            comment.delete()
+            messages.add_message(request, messages.SUCCESS, 'Comment deleted!')
+        else:
+            messages.add_message(request, messages.ERROR,
+                                'You can only delete your own comments!')
+
+        return HttpResponseRedirect(reverse('post_detail', args=[slug]))
