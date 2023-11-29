@@ -13,6 +13,11 @@ main {
     background-color: var(--white);
 }
 
+.custom-card {
+    height: 300px; /* Adjust the height as needed */
+    overflow: hidden; /* Hide overflow content if it exceeds the specified height */
+  }
+
 /* Footer */
 footer {
     flex-shrink: 0;

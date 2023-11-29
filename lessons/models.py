@@ -23,7 +23,7 @@ STATUS = ((0, "Draft"), (1, "Published"))
 class Lessons(models.Model):
 
     title = models.CharField(max_length=200, unique=True)
-    slug = models.SlugField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=200, unique=True, null=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="lesson_owner")
     image = ResizedImageField(size=[400, None], quality=75, upload_to='lessons/', force_format='WEBP', blank=False, null=False)
     image_alt = models.CharField(max_length=100, null=False, blank=False)
