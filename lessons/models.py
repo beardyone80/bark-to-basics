@@ -8,7 +8,7 @@ from django.utils.text import slugify
 CATEGORY = (
     ('afford', 'Afford'),
     ('time', 'Time'),
-    ('needs', 'Time'),
+    ('needs', 'Needs'),
     ('feed', 'Feed'),
     ('sleep', 'Sleep'),
     ('grooming', 'Grooming'),

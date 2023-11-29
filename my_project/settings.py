@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEVELOPMENT' in os.environ
 
-ALLOWED_HOSTS = ['8000-beardyone80-barktobasic-kqvjc3lu376.ws-us106.gitpod.io','.herokuapp.com']
+ALLOWED_HOSTS = ['8000-beardyone80-barktobasic-szlr40vvpqb.ws-eu106.gitpod.io','.herokuapp.com']
 
 
 # Application definition
@@ -120,7 +120,7 @@ DATABASES = {
 CSRF_TRUSTED_ORIGINS = [
     'http://*.gitpod.io',
     'http://*.herokuapp.com',
-    'https://8000-beardyone80-barktobasic-hdpr91krzgf.ws-eu106.gitpod.io',
+    'https://8000-beardyone80-barktobasic-szlr40vvpqb.ws-eu106.gitpod.io',
 ]
 
 
