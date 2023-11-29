@@ -25,12 +25,11 @@ main {
   }
 
 
-/* Login styling */
+/* Lesson details */
 
-#signup_form {
-    
+.lesson-info {
+    background-color: white;
 }
-
 
 
 
