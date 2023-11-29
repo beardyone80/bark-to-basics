@@ -22,7 +22,7 @@ handler403 = handlers.custom_permission_denied
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('home.urls')),
     path('accounts/', include('allauth.urls')),
     path('lessons/', include('lessons.urls')),
+    path('', include('home.urls')),
 ]
