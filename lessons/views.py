@@ -19,6 +19,7 @@ class AddLesson(LoginRequiredMixin, CreateView):
         return super(AddLesson, self).form_valid(form)
 
 class LessonList(ListView):
+    '''view all lessons'''
     template_name='lessons/modules.html'
     model = Lessons
     context_object_name='lessons'
