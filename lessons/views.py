@@ -1,11 +1,13 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib import messages
 from django.views.generic import CreateView, ListView, DetailView
-from .models import Lessons
+from .models import Lessons, Comment
 from .forms import LessonForm, CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import permission_required
 from django.utils.decorators import method_decorator
+from django.http import HttpResponseRedirect
+
 
 
 # Create your views here.
@@ -44,16 +46,16 @@ class LessonDetail(DetailView):
 
 
     def get_context_data(self, **kwargs):
-            context = super().get_context_data(**kwargs)
-            lesson = self.get_object()
-            comments = lesson.comments.filter(approved=True).order_by("-created_on")
-            comment_count = lesson.comments.filter(approved=True).count()
-            comment_form = CommentForm()
+        context = super().get_context_data(**kwargs)
+        lesson = self.get_object()
+        comments = lesson.comments.filter(approved=True).order_by("-created_on")
+        comment_count = lesson.comments.filter(approved=True).count()
+        comment_form = CommentForm()
 
-            context["comments"] = comments
-            context["comment_count"] = comment_count
-            context["comment_form"] = comment_form
-            return context
+        context["comments"] = comments
+        context["comment_count"] = comment_count
+        context["comment_form"] = comment_form
+        return context
 
     def post(self, request, *args, **kwargs):
         lesson = self.get_object()
@@ -71,43 +73,43 @@ class LessonDetail(DetailView):
 
         return redirect('lesson_detail', slug=lesson.slug)
 
-    def edit_comment(request, slug, comment_id):
-        """
-        view to edit comments
-        """
-        if request.method == "POST":
+def edit_comment(request, slug, comment_id):
+    """
+    view to edit comments
+    """
+    if request.method == "POST":
 
-            queryset = Post.objects.filter(status=1)
-            post = get_object_or_404(queryset, slug=slug)
-            comment = get_object_or_404(Comment, pk=comment_id)
-            comment_form = CommentForm(data=request.POST, instance=comment)
-
-            if comment_form.is_valid() and comment.commenter == request.user:
-                comment = comment_form.save(commit=False)
-                comment.post = post
-                comment.approved = False
-                comment.save()
-                messages.add_message(request, messages.SUCCESS, 'Comment Updated!')
-            else:
-                messages.add_message(request, messages.ERROR,
-                                    'Error updating comment!')
-
-        return HttpResponseRedirect(reverse('post_detail', args=[slug]))
-
-
-    def delete_comment(request, slug, comment_id):
-        """
-        view to delete comment
-        """
-        queryset = Post.objects.filter(status=1)
+        queryset = Lessons.objects.filter(status=1)
         post = get_object_or_404(queryset, slug=slug)
         comment = get_object_or_404(Comment, pk=comment_id)
+        comment_form = CommentForm(data=request.POST, instance=comment)
 
-        if comment.commenter == request.user:
-            comment.delete()
-            messages.add_message(request, messages.SUCCESS, 'Comment deleted!')
+        if comment_form.is_valid() and comment.commenter == request.user:
+            comment = comment_form.save(commit=False)
+            comment.post = post
+            comment.approved = False
+            comment.save()
+            messages.add_message(request, messages.SUCCESS, 'Comment Updated!')
         else:
             messages.add_message(request, messages.ERROR,
-                                'You can only delete your own comments!')
+                                'Error updating comment!')
 
-        return HttpResponseRedirect(reverse('post_detail', args=[slug]))
+    return HttpResponseRedirect(reverse('lesson_detail', args=[slug]))
+
+
+def delete_comment(request, slug, comment_id):
+    """
+    view to delete comment
+    """
+    queryset = Lessons.objects.filter(status=1)
+    post = get_object_or_404(queryset, slug=slug)
+    comment = get_object_or_404(Comment, pk=comment_id)
+
+    if comment.commenter == request.user:
+        comment.delete()
+        messages.add_message(request, messages.SUCCESS, 'Comment deleted!')
+    else:
+        messages.add_message(request, messages.ERROR,
+                            'You can only delete your own comments!')
+
+    return HttpResponseRedirect(reverse('lesson_detail', args=[slug]))

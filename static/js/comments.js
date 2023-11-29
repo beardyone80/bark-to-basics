@@ -21,7 +21,7 @@ const lessonSlug = document.querySelector("div").getAttribute("data-lesson-slug"
 
 for (let button of editButtons) {
     button.addEventListener("click", (e) => {
-        let commentId = e.target.getAttribute("comment_id");
+        let commentId = e.target.getAttribute("data-comment_id");
         let commentContent = document.getElementById(`comment${commentId}`).innerText;
         commentText.value = commentContent;
         submitButton.innerText = "Update";
@@ -41,9 +41,9 @@ for (let button of editButtons) {
  */
  for (let button of deleteButtons) {
     button.addEventListener("click", (e) => {
-        let commentId = e.target.getAttribute("comment_id");
+        let commentId = e.target.getAttribute("data-comment_id");
         let lessonSlug = document.body.dataset.lessonSlug;
-        deleteConfirm.href = `/lessons/${lessonSlug}/delete_comment/${commentId}/`;
+        deleteConfirm.href = `delete_comment/${commentId}`;
         deleteModal.show();
     });
 }
