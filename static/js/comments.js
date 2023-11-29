@@ -43,7 +43,7 @@ for (let button of editButtons) {
     button.addEventListener("click", (e) => {
         let commentId = e.target.getAttribute("data-comment_id");
         let lessonSlug = document.body.dataset.lessonSlug;
-        deleteConfirm.href = `/lessons/${lessonSlug}/delete_comment/${commentId}/`;
+        deleteConfirm.href = `delete_comment/${commentId}`;
         deleteModal.show();
     });
 }
