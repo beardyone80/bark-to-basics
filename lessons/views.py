@@ -55,7 +55,7 @@ class LessonDetail(DetailView):
             context["comment_form"] = comment_form
             return context
 
-    def post(self, request, *args, **kwargs):
+    def comment(self, request, *args, **kwargs):
         lesson = self.get_object()
         comment_form = CommentForm(data=request.POST)
 
@@ -77,8 +77,8 @@ class LessonDetail(DetailView):
         """
         if request.method == "POST":
 
-            queryset = Post.objects.filter(status=1)
-            post = get_object_or_404(queryset, slug=slug)
+            queryset = Lessons.objects.filter(status=1)
+            lesson = get_object_or_404(queryset, slug=slug)
             comment = get_object_or_404(Comment, pk=comment_id)
             comment_form = CommentForm(data=request.POST, instance=comment)
 
@@ -99,8 +99,8 @@ class LessonDetail(DetailView):
         """
         view to delete comment
         """
-        queryset = Post.objects.filter(status=1)
-        post = get_object_or_404(queryset, slug=slug)
+        queryset = Lessons.objects.filter(status=1)
+        lesson = get_object_or_404(queryset, slug=slug)
         comment = get_object_or_404(Comment, pk=comment_id)
 
         if comment.commenter == request.user:

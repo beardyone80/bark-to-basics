@@ -64,11 +64,11 @@
                         {{ comment.body | linebreaks }}
                     </div>
                     {% if not comment.approved and comment.commenter == user %}
-                    <p class="approval">This comment is awaiting approval</p>
+                        <p class="approval">This comment is awaiting approval</p>
                     {% endif %}
                     {% if user.is_authenticated and comment.commenter == user %}
                     <button class="btn btn-delete" onclick="showDeleteModal('{{ comment.id }}')">Delete</button>
-                    <button class="btn btn-edit" comment_id="{{ comment.id }}">Edit</button>
+                    <button class="btn btn-edit" comment_id="{{ comment.id }}">Edit</button>       
                     {% endif %}
                 </div>
                 <!-- Our for loop ends here -->
@@ -80,6 +80,7 @@
                 {% if user.is_authenticated %}
                 <h3>Leave a comment:</h3>
                 <p>Posting as: {{ user.username }}</p>
+                <form id="commentForm" method="post" style="margin-top: 1.3em;" action="{% url 'edit_comment' slug=lesson.slug comment_id=comment.id %}/">
                     {{ comment_form | crispy }}
                     {% csrf_token %}
                     <button id="submitButton" type="submit" class="btn btn-signup btn-lg">Submit</button>
