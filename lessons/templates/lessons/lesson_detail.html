@@ -4,15 +4,22 @@
 
 {% block content %}
 <div class="container">
+    <div class="row text-center>
+        <div class="col-md-6 masthead-text">
     <div class="lesson-info mt-3 p-1">
         <div class="lesson-img">
             <img src="{{ lesson.image.url }}" alt="{{lesson.image_alt}}" class="rounded mx-auto d-block">
         </div>
+        <br>
         <div class="lesson-detail">
             <h1 class="text-center">{{lesson.title}}</h1>
+            <br>
+            <br>
             <p>{{lesson.content}}</p>
-            <p class="text-muted">Posted on {{lesson.updated_on}}</p>
+            <p class="text-muted">By  {{ lesson.author }} <br> Posted on {{lesson.updated_on}}</p>
         </div>
     </div>
+</div>
+</div>
 </div>
 {% endblock %}
