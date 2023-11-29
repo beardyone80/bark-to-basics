@@ -31,8 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEVELOPMENT' in os.environ
 
-ALLOWED_HOSTS = ['8000-beardyone80-barktobasic-kqvjc3lu376.ws-us106.gitpod.io','.herokuapp.com']
-
+ALLOWED_HOSTS = ['8000-beardyone80-barktobasic-hdpr91krzgf.ws-eu106.gitpod.io']
 
 # Application definition
 
@@ -64,6 +63,7 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -120,7 +120,7 @@ DATABASES = {
 CSRF_TRUSTED_ORIGINS = [
     'http://*.gitpod.io',
     'http://*.herokuapp.com',
-    'https://8000-beardyone80-barktobasic-kqvjc3lu376.ws-us106.gitpod.io',
+    'https://8000-beardyone80-barktobasic-hdpr91krzgf.ws-eu106.gitpod.io',
 ]
 
 
@@ -168,6 +168,10 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Cloudinary settings
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
