@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django_resized import ResizedImageField
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -34,6 +35,11 @@ class Lessons(models.Model):
     excerpt = models.TextField(blank=True)
     updated_on = models.DateTimeField(auto_now=True)
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"The title of this lesson is {self.title}"
 
@@ -41,17 +47,16 @@ class Lessons(models.Model):
         ordering = ["-created_on"]
 
 
-class Comment(models.Model):
-    post = models.ForeignKey(
-    Lessons, on_delete=models.CASCADE, related_name="comments")
-    author = models.ForeignKey(
-    User, on_delete=models.CASCADE, related_name="commenter")
-    body = models.TextField()
-    approved = models.BooleanField(default=False)
-    created_on = models.DateTimeField(auto_now_add=True)
-    class Meta:
-        ordering = ["created_on"]
+# class Comment(models.Model):
+#     post = models.ForeignKey(
+#     Lessons, on_delete=models.CASCADE, related_name="comments")
+#     author = models.ForeignKey(
+#     User, on_delete=models.CASCADE, related_name="commenter")
+#     body = models.TextField()
+#     approved = models.BooleanField(default=False)
+#     created_on = models.DateTimeField(auto_now_add=True)
+#     class Meta:
+#         ordering = ["created_on"]
 
-
-    def __str__(self):
-        return f"Comment {self.body} by {self.author}"
+#     def __str__(self):
+#         return f"Comment {self.body} by {self.author}"
